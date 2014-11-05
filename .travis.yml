@@ -20,7 +20,7 @@ matrix:
 addons:
  code_climate:
   repo_token:
-   secure: "I3eTx9kL0G59wHo3pppEBlAt0eq3DkxgoTcF/6teFrNgQ2/Fn6Cx1Joh2FIIk9MTE1lERrM6nwNK6M58iYhLMJNE6svnDLnBIgt9eEQb0NCzyeDtMUQwiTDEVt/GA6RZvHoqEHbcp88H2AOHcMqGOEJZsOlDWbxMjmBKNBvAdWU="
+   secure: "hDXxhsoBWhQVPqtV5hOVpfXQd/C96TyESTC/M7/AbaRWka77fssxn18UGqzw8o3xhw+y9/JzQOgjX8k3nrdsyU5lE6DZxCZ+eFC0xnt1FU1PJf9SHlCPNDqkRmNJ7D8dB5i0qCZfVm2ND73Vvad2PZyLa66snK3bwlpeMuvZJaI="
 
 after_script:
  - ./vendor/bin/test-reporter
