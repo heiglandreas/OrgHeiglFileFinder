@@ -1,0 +1,32 @@
+{
+    "name" : "org_heigl/filefinder",
+    "type" : "library",
+    "description": "Generate a filtered filelist from one or more folders",
+    "keywords": ["file","find", "filelist", "list", "folder"],
+    "homepage": "http://github.com/heiglandreas/filelist",
+    "license": "MIT",
+    "authors": [{
+        "name": "Andreas Heigl",
+        "email": "andreas@heigl.org",
+        "homepage": "http://andreas.heigl.org",
+        "role": "Developer"
+    }],
+    "require" : {
+        "php" : ">=5.4"
+    },
+    "require-dev" : {
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit" : "4.3.*",
+        "codeclimate/php-test-reporter": "dev-master"
+    },
+    "minimum-stability" : "dev",
+    "prefer-stable" : true,
+    "autoload": {
+        "psr-0": {
+            "Org_Heigl": "src"
+        },
+        "classmap": [
+            "./"
+        ]
+    }
+}

@@ -1,0 +1,26 @@
+language: php
+
+php:
+ - 5.4
+ - 5.5
+ - 5.6
+ - hhvm
+ - hhvm-nightly
+
+before_script:
+ - ./.travis.install.sh
+
+script:
+ - ./vendor/bin/phpunit --configuration=phpunit.travis.xml
+
+matrix:
+ allow_failures:
+  - php: 5.3.3
+
+addons:
+ code_climate:
+  repo_token:
+   secure: "I3eTx9kL0G59wHo3pppEBlAt0eq3DkxgoTcF/6teFrNgQ2/Fn6Cx1Joh2FIIk9MTE1lERrM6nwNK6M58iYhLMJNE6svnDLnBIgt9eEQb0NCzyeDtMUQwiTDEVt/GA6RZvHoqEHbcp88H2AOHcMqGOEJZsOlDWbxMjmBKNBvAdWU="
+
+after_script:
+ - ./vendor/bin/test-reporter
