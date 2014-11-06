@@ -1,5 +1,7 @@
 <?php
 
+namespace TestSpace;
+
 class Testclass implements \Iterator {
 
     /**
