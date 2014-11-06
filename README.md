@@ -47,7 +47,8 @@ The filters have to implement ```\Org_Heigl\FileFinder\FilterInterface```. There
 Currently the library contains the following filters:
 
 * **FileExtension** - A filter to check whether the files extension is one of a given number of extensions. The list of extensions if given to the constructor like so: ```new FileExtension(array('foo', 'bar'))```.
-* **fileStart** - A filter that checks whether the files content starts with the given string. This filter is invoked like this: ```new FileStart('<?php')``` to check for a PHP-file.
+* **FileStart** - A filter that checks whether the files content starts with the given string. You could use it like this: ```new FileStart('<?php')``` to check for a PHP-file.
+
 ## License
 
 This library is licensed under the MIT-License as found in the [LICENSE](LICENSE)-File.
