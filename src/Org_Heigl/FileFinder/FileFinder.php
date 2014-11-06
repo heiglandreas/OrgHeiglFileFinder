@@ -112,7 +112,7 @@ class FileFinder
      */
     public function find()
     {
-        $this->fileList->clear();
+        $this->getFileList()->clear();
         foreach ($this->searchLocations as $location) {
             if (! is_dir($location)) {
                 continue;
@@ -122,11 +122,11 @@ class FileFinder
                 if (! $this->filter($file)) {
                     continue;
                 }
-                $this->fileList->add($file);
+                $this->getFileList()->add($file);
             }
         }
 
-        return $this->fileList;
+        return $this->getFileList();
     }
 
     /**
