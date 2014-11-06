@@ -38,6 +38,18 @@ $list = $finder->find();
 // $list will be the MyPrettyFileList-Object containing all Files with the extension 'jpg' inside ```$dir```
 ```
 
+You can also get a mapping of classname to filename for all classes implementing ```\Iterator``` underneath the directory ```$dir``` using this snippet:
+
+```php
+$finder = new \Org_Heigl\FileFinder\FileFinder();
+$finder->addFilter(new \Org_Heigl\FileFinder\Filter\FileExtension('php'));
+$finder->addFilter(new \Org_Heigl\FileFinder\Filter\ClassIsInstanceof('\Iterator'));
+$finder->setFileList(new \Org_Heigl\FileFinder\ClassMapList());
+$finder->addDirectory($dir);
+$list = $finder->find();
+// $list now contains the classname as key and the filepath as value
+```
+
 The directories added with the ```FileList::addDirectory()```-method will be recursively checked.
 
 The filters have to implement ```\Org_Heigl\FileFinder\FilterInterface```. Therefore you can add your own filters very easily.
