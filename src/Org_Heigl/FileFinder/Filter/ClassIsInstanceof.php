@@ -85,7 +85,9 @@ class ClassIsInstanceof implements FilterInterface
 
         $class[] = $results[1];
 
-        return str_replace('\\\\', '\\', '\\' . implode('\\', $class));
+        $classname = str_replace('\\\\', '\\', '\\' . implode('\\', $class));
+
+        return $classname;
     }
 
     public function addInstance($instance)
