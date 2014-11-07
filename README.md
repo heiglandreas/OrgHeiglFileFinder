@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/heiglandreas/OrgHeiglFileFinder.svg?branch=master)](https://travis-ci.org/heiglandreas/OrgHeiglFileFinder)
 [![Code Climate](https://codeclimate.com/github/heiglandreas/OrgHeiglFileFinder/badges/gpa.svg)](https://codeclimate.com/github/heiglandreas/OrgHeiglFileFinder)
 [![Test Coverage](https://codeclimate.com/github/heiglandreas/OrgHeiglFileFinder/badges/coverage.svg)](https://codeclimate.com/github/heiglandreas/OrgHeiglFileFinder)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/heiglandreas/OrgHeiglFileFinder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/heiglandreas/OrgHeiglFileFinder/?branch=master)
 
 This library allows to iterate through a number of folders and filter the list of files. The files are returned in a filelist-object.
 
