@@ -33,6 +33,7 @@ namespace Org_Heigl\FileFinder\Filter;
 
 
 use Org_Heigl\FileFinder\FilterInterface;
+use Org_Heigl\FileFinder\FileInfoInterface;
 
 /**
  * Class MimeType
@@ -48,7 +49,7 @@ use Org_Heigl\FileFinder\FilterInterface;
  * Therefore an example for creating a MimeType-Filter would look like that:
  *
  * ```php
- * $finfo = new \Finfo(FILEINFO_MIME_TYPE);
+ * $finfo = new \Org_Heigl\FileFinder\Service\FinfoWrapper();
  * $filter = new MimeType($finfo);
  * $filter->addMimeType('application/pdf');
  * $filter->addMimeType('x-application/pdf');
@@ -66,7 +67,7 @@ class MimeType implements FilterInterface
     protected $mimeTypes = array();
 
     /**
-     * @var FInfo $finfo
+     * @var FileInfoInterface $finfo
      */
     protected $finfo = null;
 
@@ -90,10 +91,9 @@ class MimeType implements FilterInterface
      *
      * @return void
      */
-    public function __construct(\FInfo $finfo, $mimeTypes = array())
+    public function __construct(FileInfoInterface $finfo, $mimeTypes = array())
     {
         $this->finfo = $finfo;
-        $this->finfo->set_flags(FILEINFO_MIME_TYPE);
 
         if (! is_array($mimeTypes)) {
             $mimeTypes = array($mimeTypes);
@@ -145,6 +145,6 @@ class MimeType implements FilterInterface
      */
     public function getMimeType(\SplFileInfo $file)
     {
-        return $this->finfo->file($file->getPathname());
+        return $this->finfo->getMimeType($file);
     }
 }

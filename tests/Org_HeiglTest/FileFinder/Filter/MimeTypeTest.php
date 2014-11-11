@@ -38,14 +38,13 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var \Finfo $finfo
+     * @var \Org_Heigl\FileFinder\FileInfoInterface $finfo
      */
     protected $finfo;
 
     public function setup()
     {
-        $this->finfo = M::mock('\Finfo');
-        $this->finfo->shouldReceive('set_flags');
+        $this->finfo = M::mock('\Org_Heigl\FileFinder\Service\FinfoWrapper');
     }
 
     public function testSettingANdGettingMimeTypes()
@@ -78,7 +77,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     public function testFilterOne()
     {
         $filter = new MimeType($this->finfo, 'image/jpeg');
-        $this->finfo->shouldReceive('file')->with('foo')->andReturn('image/jpeg');
+        $this->finfo->shouldReceive('getMimeType')->andReturn('image/jpeg');
 
         $fileInfo = M::mock('\SPLFileInfo');
         $fileInfo->shouldREceive('getPathname')->andReturn('foo');
@@ -89,7 +88,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     public function testFilterTwo()
     {
         $filter = new MimeType($this->finfo, array('image/jpeg', 'application/pdf'));
-        $this->finfo->shouldReceive('file')->andReturn('application/pdf');
+        $this->finfo->shouldReceive('getMimeType')->andReturn('application/pdf');
 
         $fileInfo = M::mock('\SPLFileInfo');
         $fileInfo->shouldREceive('getPathname')->andReturn('foo');
@@ -100,7 +99,7 @@ class MimeTypeTest extends \PHPUnit_Framework_TestCase
     public function testFilterThree()
     {
         $filter = new MimeType($this->finfo, 'image/jpeg');
-        $this->finfo->shouldReceive('file')->andReturn('application/pdf');
+        $this->finfo->shouldReceive('getMimeType')->andReturn('application/pdf');
 
         $fileInfo = M::mock('\SPLFileInfo');
         $fileInfo->shouldREceive('getPathname')->andReturn('bar');
