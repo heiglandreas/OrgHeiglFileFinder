@@ -103,66 +103,18 @@ class ClassMapList implements FileListInterface, \Iterator, \Countable
      */
     public function add(\SplFileInfo $file)
     {
-        $content = token_get_all(file_get_contents($file->getPathname()));
-        $classname = $this->getClassnameFromTokenarray($content);
+        $content = new \Org_Heigl\FileFinder\Service\Tokenlist(file_get_contents($file->getPathname()));
+        $classname = $content->getClassName();
         if (! $classname) {
             return;
         }
 
-        $class = $this->getNamespaceFromTokenarray($content);
+        $class = $content->getNamespace();
         $class[] = $classname;
 
         $key = str_replace('\\\\', '\\', '\\' . implode('\\', $class));
 
         $this->list[$key] = realpath($file->getPathname());
-    }
-
-    /**
-     * Get a the namespace from a token-array
-     *
-     * @param array $tokenarray
-     *
-     * @return array
-     */
-    protected function getNamespaceFromTokenarray($tokenarray)
-    {
-        $class       = array();
-        $inNamespace = false;
-
-        foreach ($tokenarray as $key => $token) {
-            if (T_NAMESPACE === $token[0]) {
-                $inNamespace = true;
-                continue;
-            }
-            if (310 === $token[0] && $inNamespace) {
-                $class[] = $token[1];
-
-            }
-            if (';' === $token && $inNamespace) {
-                return $class;
-            }
-        }
-
-        return array();
-    }
-
-    /**
-     * Get the classname from a token-array
-     *
-     * @param array $tokenarray
-     *
-     * @return string
-     */
-    protected function getClassnameFromTokenarray($tokenarray)
-    {
-
-        foreach ($tokenarray as $key => $token) {
-            if (T_CLASS === $token[0]) {
-                return $tokenarray[$key + 2][1];
-            }
-        }
-
-        return '';
     }
 
     /**
