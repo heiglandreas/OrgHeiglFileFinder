@@ -122,41 +122,25 @@ class FileSize implements FilterInterface
      */
     protected function getByteSize($size)
     {
-        if (preg_match('/(\d+)\s*([tgkmbi]{1,3})/i', $size, $result)) {
-            $size = $result[1];
-            switch(strtolower($result[2])) {
-                case 'tib':
-                    $size = $size * pow(1000, 4);
-                    break;
-                case 't':
-                case 'tb':
-                    $size = $size * pow(1024, 4);
-                    break;
-                case 'gib':
-                    $size = $size * pow(1000, 3);
-                    break;
-                case 'g':
-                case 'gb':
-                    $size = $size * pow(1024, 3);
-                    break;
-                case 'mib':
-                    $size = $size * pow(1000, 2);
-                    break;
-                case 'm':
-                case 'mb':
-                    $size = $size * pow(1024, 2);
-                    break;
-                case 'kib':
-                    $size = $size * 1000;
-                    break;
-                case 'k':
-                case 'kb':
-                    $size = $size * 1024;
-                    break;
-            }
+        $mapping = array(
+            'tib' => pow(1000, 4),
+            'gib' => pow(1000, 3),
+            'mib' => pow(1000, 2),
+            'kib' => pow(1000, 1),
+            'tb'  => pow(1024, 4),
+            't'   => pow(1024, 4),
+            'gb'  => pow(1024, 3),
+            'g'   => pow(1024, 3),
+            'mb'  => pow(1024, 2),
+            'm'   => pow(1024, 2),
+            'kb'  => pow(1024, 1),
+            'k'   => pow(1024, 1),
+        );
+        if (! preg_match('/(\d+)\s*([tgkmbi]{1,3})/i', $size, $result)) {
+            return $size;
         }
 
-        return $size;
+        return $mapping[strtolower($result[2])] * $result[1];
     }
 
     /**
