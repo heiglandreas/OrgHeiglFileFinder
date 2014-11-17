@@ -103,34 +103,66 @@ class ClassMapList implements FileListInterface, \Iterator, \Countable
      */
     public function add(\SplFileInfo $file)
     {
-        $class = array();
-        $classname = '';
         $content = token_get_all(file_get_contents($file->getPathname()));
-        $inNamespace = false;
-        foreach ($content as $key => $token) {
-            if (T_NAMESPACE === $token[0]) {
-                $inNamespace = true;
-            }
-            if ($inNamespace && 310 === $token[0]) {
-                $class[] = $token[1];
-            }
-            if ($inNamespace && ';' === $token) {
-                $inNamespace = false;
-            }
-            if (T_CLASS === $token[0]) {
-                $classname = $content[$key + 2][1];
-            }
-        }
-
+        $classname = $this->getClassnameFromTokenarray($content);
         if (! $classname) {
             return;
         }
 
+        $class = $this->getNamespaceFromTokenarray($content);
         $class[] = $classname;
 
         $key = str_replace('\\\\', '\\', '\\' . implode('\\', $class));
 
         $this->list[$key] = realpath($file->getPathname());
+    }
+
+    /**
+     * Get a the namespace from a token-array
+     *
+     * @param array $tokenarray
+     *
+     * @return array
+     */
+    protected function getNamespaceFromTokenarray($tokenarray)
+    {
+        $class       = array();
+        $inNamespace = false;
+
+        foreach ($tokenarray as $key => $token) {
+            if (T_NAMESPACE === $token[0]) {
+                $inNamespace = true;
+                continue;
+            }
+            if (310 === $token[0] && $inNamespace) {
+                $class[] = $token[1];
+
+            }
+            if (';' === $token && $inNamespace) {
+                return $class;
+            }
+        }
+
+        return array();
+    }
+
+    /**
+     * Get the classname from a token-array
+     *
+     * @param array $tokenarray
+     *
+     * @return string
+     */
+    protected function getClassnameFromTokenarray($tokenarray)
+    {
+
+        foreach ($tokenarray as $key => $token) {
+            if (T_CLASS === $token[0]) {
+                return $tokenarray[$key + 2][1];
+            }
+        }
+
+        return '';
     }
 
     /**
