@@ -37,6 +37,13 @@ use Mockery as M;
 
 class DateCompareTest extends \PHPUnit_Framework_TestCase
 {
+    public function setup()
+    {
+        if (version_compare(PHP_VERSION, '5.5.0', '<')) {
+            $this->markTestSkipped('Can\'t be tested with PHP < 5.5');
+        }
+    }
+
     public function testCreationOfInstance()
     {
         $dt = M::mock('\DateTime');
