@@ -1,0 +1,16 @@
+site_name: Org_Heigl\FileFinder
+repo_url: https://github.com/heiglandreas/OrgHeiglFileFinder
+site_author: Andreas Heigl
+theme: 'bootstrap'
+pages:
+ - ['index.md', 'Home']
+ - ['filters/fileExtension.md', 'Filters', 'FileExtension']
+ - ['filters/fileStart.md', 'Filters', 'FileStart']
+ - ['filters/holdsSinglePHPClass.md', 'Filters', 'HoldsSinglePHPClass']
+ - ['filters/dateCompare.md', 'Filters', 'DateCompare']
+ - ['filters/classIsInstanceOf.md', 'Filters', 'ClassIsInstanceof']
+ - ['filters/fileSize.md', 'Filters', 'FileSize']
+ - ['lists/fileList.md', 'Lists', 'FileList']
+ - ['lists/classMapList.md', 'Lists', 'ClassMapList']
+copyright: 'Copyright &copy;2014 <a href="https://about.me/heiglandreas">Andreas Heigl</a>'
+markdown_extensions: [codehilite, attr_list, def_list, smarty]
