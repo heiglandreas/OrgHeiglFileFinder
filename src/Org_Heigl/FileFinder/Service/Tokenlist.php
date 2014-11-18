@@ -81,7 +81,7 @@ class Tokenlist
                 $inNamespace = true;
                 continue;
             }
-            if (310 === $token[0] && $inNamespace) {
+            if (T_STRING === $token[0] && $inNamespace) {
                 $class[] = $token[1];
 
             }

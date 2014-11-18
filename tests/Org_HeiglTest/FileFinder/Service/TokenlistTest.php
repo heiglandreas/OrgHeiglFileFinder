@@ -41,10 +41,10 @@ class TokenlistTest extends \PHPUnit_Framework_TestCase
     {
         $list = new Tokenlist('<?php echo "Hello World";');
         $this->assertAttributeEquals(array(
-            array(376, '<?php ', 1),
-            array(319, 'echo', 1),
-            array(379, ' ', 1),
-            array(318, '"Hello World"', 1),
+            array(T_OPEN_TAG, '<?php ', 1),
+            array(T_ECHO, 'echo', 1),
+            array(T_WHITESPACE, ' ', 1),
+            array(T_CONSTANT_ENCAPSED_STRING, '"Hello World"', 1),
             ';',
         ), 'tokenlist', $list);
     }
