@@ -70,12 +70,11 @@ class ClassIsInstanceof implements FilterInterface
 
     protected function getClassName($file)
     {
-        $class = array();
-        $content = file_get_contents($file);
-        if (preg_match('/namespace\s+([^\;\s]+)[\s\;]/im', $content, $results)) {
-            $class[] = $results[1];
-        }
-        if (! preg_match('/class\s+([^\s|\{]+)[\s\{]/im', $content, $results)) {
+        $content = new \Org_Heigl\FileFinder\Service\Tokenlist(file_get_contents($file));
+        $class   = $content->getNamespace();
+
+        $classname = $content->getClassName();
+        if (! $classname) {
             throw new \InvalidArgumentException(sprintf(
                 'The given file "%s" does not contain a class',
                 $file
@@ -83,9 +82,11 @@ class ClassIsInstanceof implements FilterInterface
         }
         unset($content);
 
-        $class[] = $results[1];
+        $class[] = $classname;
 
-        return str_replace('\\\\', '\\', '\\' . implode('\\', $class));
+        $classname = str_replace('\\\\', '\\', '\\' . implode('\\', $class));
+
+        return $classname;
     }
 
     public function addInstance($instance)

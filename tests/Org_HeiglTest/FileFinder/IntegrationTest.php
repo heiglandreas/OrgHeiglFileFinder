@@ -57,4 +57,17 @@ class IntegrationTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(new \SplFileInfo(__DIR__ . '/_assets/testFind/two.php'), $list->current());
     }
 
+    public function testClassMapping()
+    {
+        $finder = new \Org_Heigl\FileFinder\FileFinder();
+        $finder->addFilter(new \Org_Heigl\FileFinder\Filter\FileExtension('php'));
+        $finder->addFilter(new \Org_Heigl\FileFinder\Filter\ClassIsInstanceof('\Org_Heigl\FileFinder\FilterInterface'));
+        $finder->setFileList(new \Org_Heigl\FileFinder\ClassMapList());
+        $finder->addDirectory(__DIR__ . '/../../../src');
+        $list = $finder->find()->toArray();
+        $this->assertArrayHasKey('\Org_Heigl\FileFinder\Filter\FileExtension', $list);
+        $this->assertArrayNotHasKey('\Org_Heigl\FileFinder\ClassMapList', $list);
+        $this->assertContains(realpath(__DIR__ . '/../../../src/Org_Heigl/FileFinder/Filter/FileExtension.php'), $list);
+        $this->assertNotContains(realpath(__DIR__ . '/../../../src/Org_Heigl/FileFinder/ClasMapList.php'), $list);
+    }
 }

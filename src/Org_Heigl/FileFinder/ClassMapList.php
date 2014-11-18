@@ -103,19 +103,18 @@ class ClassMapList implements FileListInterface, \Iterator, \Countable
      */
     public function add(\SplFileInfo $file)
     {
-        $class = array();
-        $content = file_get_contents($file->getPathname());
-        if (preg_match('/namespace\s+([^\;\s]+)[\s\;]/im', $content, $results)) {
-            $class[] = $results[1];
-        }
-        if (! preg_match('/class\s+([^\s|\{]+)[\s\{]/im', $content, $results)) {
+        $content = new \Org_Heigl\FileFinder\Service\Tokenlist(file_get_contents($file->getPathname()));
+        $classname = $content->getClassName();
+        if (! $classname) {
             return;
         }
-        $class[] = $results[1];
+
+        $class = $content->getNamespace();
+        $class[] = $classname;
 
         $key = str_replace('\\\\', '\\', '\\' . implode('\\', $class));
 
-        $this->list[$key] = $file->getPathname();
+        $this->list[$key] = realpath($file->getPathname());
     }
 
     /**
