@@ -127,7 +127,6 @@ class DateCompare implements FilterInterface
      */
     public function filter(\SplFileInfo $file)
     {
-        $method = 'get' .$this->compareType;
         $filedate = new \DateTime('@' . $file->{'get' . $this->compareType}());
 
         $diff = $this->compareDate->diff($filedate);
