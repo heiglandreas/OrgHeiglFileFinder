@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c)2014-2014 heiglandreas
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -11,7 +11,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +20,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category 
+ * @category
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright ©2014-2014 Andreas Heigl
  * @license   http://www.opesource.org/licenses/mit-license.php MIT-License
@@ -34,6 +34,8 @@ namespace Org_Heigl\FileFinder;
 
 class FileList implements FileListInterface, \Countable
 {
+    use IteratorTrait;
+
     protected $filelist = array();
 
     /**
@@ -59,62 +61,6 @@ class FileList implements FileListInterface, \Countable
     }
 
     /**
-     * Return the current element
-     *
-     * @link http://php.net/manual/en/iterator.current.php
-     * @return mixed Can return any type.
-     */
-    public function current()
-    {
-        return current($this->filelist);
-    }
-
-    /**
-     * Move forward to next element
-     *
-     * @link http://php.net/manual/en/iterator.next.php
-     * @return void Any returned value is ignored.
-     */
-    public function next()
-    {
-        next($this->filelist);
-    }
-
-    /**
-     * Return the key of the current element
-     *
-     * @link http://php.net/manual/en/iterator.key.php
-     * @return mixed scalar on success, or null on failure.
-     */
-    public function key()
-    {
-        return key($this->filelist);
-    }
-
-    /**
-     * Checks if current position is valid
-     *
-     * @link http://php.net/manual/en/iterator.valid.php
-     * @return boolean The return value will be casted to boolean and then evaluated.
-     *       Returns true on success or false on failure.
-     */
-    public function valid()
-    {
-        return false !== $this->current();
-    }
-
-    /**
-     * Rewind the Iterator to the first element
-     *
-     * @link http://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
-     */
-    public function rewind()
-    {
-        reset($this->filelist);
-    }
-
-    /**
      * Count elements of an object
      *
      * @link http://php.net/manual/en/countable.count.php
@@ -126,5 +72,15 @@ class FileList implements FileListInterface, \Countable
     public function count()
     {
         return count($this->filelist);
+    }
+
+    /**
+     * Get the array the iterator shall iterate over.
+     *
+     * @return mixed
+     */
+    protected function & getIteratorArray()
+    {
+        return $this->filelist;
     }
 }

@@ -54,6 +54,23 @@ use Org_Heigl\FileFinder\FilterInterface;
  */
 class FileSize implements FilterInterface
 {
+    /**
+     * @var array $mapping
+     */
+    protected $mapping = array(
+        'tib' => array(1000, 4),
+        'gib' => array(1000, 3),
+        'mib' => array(1000, 2),
+        'kib' => array(1000, 1),
+        'tb'  => array(1024, 4),
+        't'   => array(1024, 4),
+        'gb'  => array(1024, 3),
+        'g'   => array(1024, 3),
+        'mb'  => array(1024, 2),
+        'm'   => array(1024, 2),
+        'kb'  => array(1024, 1),
+        'k'   => array(1024, 1),
+    );
 
     /**
      * @var int $minsize
@@ -122,25 +139,12 @@ class FileSize implements FilterInterface
      */
     protected function getByteSize($size)
     {
-        $mapping = array(
-            'tib' => pow(1000, 4),
-            'gib' => pow(1000, 3),
-            'mib' => pow(1000, 2),
-            'kib' => pow(1000, 1),
-            'tb'  => pow(1024, 4),
-            't'   => pow(1024, 4),
-            'gb'  => pow(1024, 3),
-            'g'   => pow(1024, 3),
-            'mb'  => pow(1024, 2),
-            'm'   => pow(1024, 2),
-            'kb'  => pow(1024, 1),
-            'k'   => pow(1024, 1),
-        );
         if (! preg_match('/(\d+)\s*([tgkmbi]{1,3})/i', $size, $result)) {
             return $size;
         }
 
-        return $mapping[strtolower($result[2])] * $result[1];
+        $mapping = $this->mapping[strtolower($result[2])];
+        return pow($mapping[0], $mapping[1]) * $result[1];
     }
 
     /**
