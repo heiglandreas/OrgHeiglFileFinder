@@ -32,7 +32,7 @@
 namespace Org_Heigl\FileFinder;
 
 
-class ClassMapList implements FileListInterface, \Iterator, \Countable
+class ClassMapList implements FileListInterface, \Countable
 {
     protected $list = array();
 

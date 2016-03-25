@@ -32,7 +32,7 @@
 namespace Org_Heigl\FileFinder;
 
 
-interface FileListInterface 
+interface FileListInterface extends \Iterator
 {
     /**
      * Add an SPL-File-Info to the filelist
