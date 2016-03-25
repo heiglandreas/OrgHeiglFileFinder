@@ -83,7 +83,7 @@ class DateCompare implements FilterInterface
     const CHECK_AFTER = 3;
 
     /**
-     * @var \DateTime $compareDate
+     * @var \DateTimeInterface $compareDate
      */
     protected $compareDate = null;
 
