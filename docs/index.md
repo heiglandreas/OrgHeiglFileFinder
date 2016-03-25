@@ -20,17 +20,20 @@ Alternatively you can include the following line in your ```composer.json``` ins
 
 Simplest usage would be to add a filter to the FileFinder as well as a directory.
 
-    :::php
-    $finder = new \Org_Heigl\FileFinder\FileFinder();
-    $finder->addFilter(new \Org_Heigl\FileFinder\Filter\FileExtension('jpg'));
-    $finder->addDirectory($dir);
-    $list = $finder->find();
-    // $list will be an \Org_Heigl\FileFinder\FileList-Object containing all Files with the extension 'jpg' inside $dir
+```php
+<?php
+$finder = new \Org_Heigl\FileFinder\FileFinder();
+$finder->addFilter(new \Org_Heigl\FileFinder\Filter\FileExtension('jpg'));
+$finder->addDirectory($dir);
+$list = $finder->find();
+// $list will be an \Org_Heigl\FileFinder\FileList-Object containing all Files with the extension 'jpg' inside $dir
+```
 
 You can also set your own ```FileList```-Object as long as it implements
 ```\Org_Heigl\FileFinder\FileListInterface```. That would then look like this:
 
     :::php
+    <?php
     $finder = new \Org_Heigl\FileFinder\FileFinder();
     $finder->addFilter(new \Org_Heigl\FileFinder\Filter\FileExtension('jpg'));
     $finder->addDirectory($dir);
@@ -41,6 +44,7 @@ You can also set your own ```FileList```-Object as long as it implements
 You can also get a mapping of classname to filename for all classes implementing ```\Iterator``` underneath the directory ```$dir``` using this snippet:
 
     :::php
+    <?php
     $finder = new \Org_Heigl\FileFinder\FileFinder();
     $finder->addFilter(new \Org_Heigl\FileFinder\Filter\FileExtension('php'));
     $finder->addFilter(new \Org_Heigl\FileFinder\Filter\ClassIsInstanceof('\Iterator'));
