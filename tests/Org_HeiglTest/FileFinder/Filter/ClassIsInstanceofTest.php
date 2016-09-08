@@ -99,7 +99,7 @@ class ClassIsInstanceofTest extends \PHPUnit_Framework_TestCase
         $file = M::mock('\SPLFileInfo');
         $file->shouldReceive('getPathname')->andReturn($dir);
 
-        $this->assertTrue($obj->filter($file));
+        $this->assertFalse($obj->filter($file));
     }
 
     public function testHasNotInterface()

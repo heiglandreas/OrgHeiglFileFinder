@@ -32,6 +32,8 @@
 namespace Org_Heigl\FileFinder\Filter;
 
 use Org_Heigl\FileFinder\FilterInterface;
+use BetterReflection\Reflection\ReflectionClass;
+
 
 class ClassIsInstanceof implements FilterInterface
 {
@@ -48,7 +50,7 @@ class ClassIsInstanceof implements FilterInterface
     {
         try {
             $class = $this->getClassName($file->getPathname());
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -56,13 +58,20 @@ class ClassIsInstanceof implements FilterInterface
             return false;
         }
 
-        $ReflectionClass = new \ReflectionClass($class);
-        $class = $ReflectionClass->newInstanceWithoutConstructor();
+        $class = ReflectionClass::createFromName($class);
 
         foreach ($this->instances as $instance) {
-            if ($class instanceof $instance) {
-                return true;
-            }
+            do {
+                $name = $class->getName();
+                if ($instance == $name) {
+                    return true;
+                }
+                $interfaces = $class->getInterfaceNames();
+                if (is_array($interfaces) && in_array($instance, $interfaces)) {
+                    return true;
+                }
+                $class = $class->getParentClass();
+            } while (false != $class);
         }
 
         return false;
