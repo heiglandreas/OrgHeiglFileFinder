@@ -71,7 +71,7 @@ class ClassIsInstanceof implements FilterInterface
                     return true;
                 }
                 $class = $class->getParentClass();
-            } while (false != $class);
+            } while (null != $class);
         }
 
         return false;
