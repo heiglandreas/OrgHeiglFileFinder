@@ -100,7 +100,7 @@ class ClassIsInstanceof implements FilterInterface
 
     public function addInstance($instance)
     {
-        $this->instances[] = $instance;
+        $this->instances[] = preg_replace('/^\\\\/', '', $instance);
 
         return $this;
     }
