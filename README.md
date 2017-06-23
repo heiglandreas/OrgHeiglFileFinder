@@ -63,7 +63,7 @@ allows sorting the filelist before using it. Just provide an implementation of t
 $finder = new \Org_Heigl\FileFinder\FileFinder();
 $finder->addDirectory($dir);
 $list = $finder->find();
-$list->sort(ne w\Org_Heigl\FileFinder\Sorter\MTime());
+$list->sort(new \Org_Heigl\FileFinder\Sorter\MTime());
 // $list now is sorted by MTime ascending.
 ```
 
