@@ -55,6 +55,19 @@ The directories added with the ```FileList::addDirectory()```-method will be rec
 
 The filters have to implement ```\Org_Heigl\FileFinder\FilterInterface```. Therefore you can add your own filters very easily.
 
+The default ```FileList```-implementation also contains a ```sort```-method that
+allows sorting the filelist before using it. Just provide an implementation of the
+```SortInterface``` as argument like this:
+
+```php
+$finder = new \Org_Heigl\FileFinder\FileFinder();
+$finder->addDirectory($dir);
+$list = $finder->find();
+$list->sort(new \Org_Heigl\FileFinder\Sorter\MTime());
+// $list now is sorted by MTime ascending.
+```
+
+
 ## Contains
 
 Currently the library contains the following filters:

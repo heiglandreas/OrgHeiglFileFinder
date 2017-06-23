@@ -25,68 +25,51 @@
  * @copyright ©2014-2014 Andreas Heigl
  * @license   http://www.opesource.org/licenses/mit-license.php MIT-License
  * @version   0.0
- * @since     07.11.14
+ * @since     11.11.14
  * @link      https://github.com/heiglandreas/
  */
 
-namespace Org_HeiglTest\FileFinder\Filter;
+namespace Org_Heigl\FileFinderTest\Service;
 
-
-use Org_Heigl\FileFinder\Filter\Not;
+use Org_Heigl\FileFinder\Service\FinfoWrapper;
 use Mockery as M;
 
-class NotTest extends \PHPUnit_Framework_TestCase
+class FinfoWrapperTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSettingFilter()
-    {
-        $filter = new Not();
-        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
 
-        $this->assertSame($filter, $filter->setFilter($mocked));
-        $this->assertAttributeEquals($mocked, 'filter', $filter);
+    public function testInstantiationWithFInfo()
+    {
+        parent::markTestSkipped('Skipped');
+        $finfo = $this->getMock('\finfo');
+        $finfo->expects($this->once())
+              ->method('set_flags')
+              ->with($this->equalTo(FILEINFO_MIME_TYPE));
+
+        $obj = new FinfoWrapper($finfo);
+        $this->assertAttributeEquals($finfo, 'finfo', $obj);
 
     }
 
-    public function testSettingFilterInConstructor()
+    public function testInstantiationWithoutFinfo()
     {
-        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
-        $filter = new Not($mocked);
-
-        $this->assertAttributeEquals($mocked, 'filter', $filter);
+        $obj = new FinfoWrapper();
+        $this->assertAttributeInstanceOf('\finfo', 'finfo', $obj);
     }
 
-    /**
-     * @dataProvider filterInvertsProvider
-     */
-    public function testFilterInverts($given, $expected)
+    public function testGettingMimetype()
     {
-        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
-        $mocked->shouldReceive('filter')->andReturn($given);
-
-        $file   = M::mock('\SPLFileInfo');
-
-        $filter = new Not($mocked);
-
-        $this->assertSame($expected, $filter->filter($file));
-    }
-
-    /**
-     * @expectedException \LogicException
-     */
-    public function testFilterThrowsException()
-    {
-        $filter = new Not();
-
-        $file   = M::mock('\SPLFileInfo');
-
-        $filter->filter($file);
-    }
-
-    public function filterInvertsProvider()
-    {
-        return array(
-            array(true, false),
-            array(false, true),
-        );
+        parent::markTestSkipped('Skipped');
+        $finfo = $this->getMock('\finfo');
+        $finfo->expects($this->once())
+              ->method('file')
+              ->willReturn('foo');
+        $finfo->expects($this->once())
+            ->method('set_flags')
+            ->with($this->equalTo(FILEINFO_MIME_TYPE));
+        
+        $file = M::mock('\SPLFileInfo');
+        $file->shouldReceive('getPathname')->andReturn('bar');
+        $obj = new FinfoWrapper($finfo);
+        $this->assertSame('foo', $obj->getMimeType($file));
     }
 }

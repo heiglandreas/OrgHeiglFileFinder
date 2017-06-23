@@ -29,7 +29,7 @@
  * @link      https://github.com/heiglandreas/
  */
 
-namespace Org_HeiglTest\FileFinder\Filter;
+namespace Org_Heigl\FileFinderTest\Filter;
 
 use Mockery as M;
 use Org_Heigl\FileFinder\Filter\FileSize;

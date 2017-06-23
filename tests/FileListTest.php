@@ -29,7 +29,7 @@
  * @link      https://github.com/heiglandreas/
  */
 
-namespace Org_HeiglTest\FileFinder;
+namespace Org_Heigl\FileFinderTest;
 
 
 use Org_Heigl\FileFinder\FileList;

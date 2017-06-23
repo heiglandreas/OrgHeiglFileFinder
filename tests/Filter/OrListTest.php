@@ -25,49 +25,62 @@
  * @copyright ©2014-2014 Andreas Heigl
  * @license   http://www.opesource.org/licenses/mit-license.php MIT-License
  * @version   0.0
- * @since     11.11.14
+ * @since     07.11.14
  * @link      https://github.com/heiglandreas/
  */
 
-namespace Org_HeiglTest\FileFinder\Service;
+namespace Org_Heigl\FileFinderTest\Filter;
 
-use Org_Heigl\FileFinder\Service\FinfoWrapper;
+
+use Org_Heigl\FileFinder\Filter\OrList;
 use Mockery as M;
 
-class FinfoWrapperTest extends \PHPUnit_Framework_TestCase
+class OrListTest extends \PHPUnit_Framework_TestCase
 {
-
-    public function testInstantiationWithFInfo()
+    public function testAddingFilters()
     {
-        $finfo = $this->getMock('\finfo');
-        $finfo->expects($this->once())
-              ->method('set_flags')
-              ->with($this->equalTo(FILEINFO_MIME_TYPE));
+        $filter = new OrList();
+        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
 
-        $obj = new FinfoWrapper($finfo);
-        $this->assertAttributeEquals($finfo, 'finfo', $obj);
-
+        $this->assertSame($filter, $filter->addFilter($mocked));
+        $this->assertAttributeContainsOnly($mocked, 'filter', $filter);
     }
 
-    public function testInstantiationWithoutFinfo()
+    public function testSettingFilterInConstructor()
     {
-        $obj = new FinfoWrapper();
-        $this->assertAttributeInstanceOf('\finfo', 'finfo', $obj);
+        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
+        $filter = new OrList(array($mocked));
+
+        $this->assertAttributeContainsOnly($mocked, 'filter', $filter);
     }
 
-    public function testGettingMimetype()
+    /**
+     * @dataProvider filteringProvider
+     */
+    public function testFiltering($given, $expected)
     {
-        $finfo = $this->getMock('\finfo');
-        $finfo->expects($this->once())
-              ->method('file')
-              ->willReturn('foo');
-        $finfo->expects($this->once())
-            ->method('set_flags')
-            ->with($this->equalTo(FILEINFO_MIME_TYPE));
-        
-        $file = M::mock('\SPLFileInfo');
-        $file->shouldReceive('getPathname')->andReturn('bar');
-        $obj = new FinfoWrapper($finfo);
-        $this->assertSame('foo', $obj->getMimeType($file));
+
+        $file   = M::mock('\SPLFileInfo');
+
+        $filter = new OrList();
+        foreach ($given as $give) {
+            $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
+            $mocked->shouldReceive('filter')->andReturn($give);
+            $filter->addFilter($mocked);
+        }
+
+        $this->assertSame($expected, $filter->filter($file));
     }
+
+    public function filteringProvider()
+    {
+        return array(
+            array(array(true, false, true), true),
+            array(array(false, false, false), false),
+            array(array(true,true,true), true),
+        );
+    }
+
+
+
 }
