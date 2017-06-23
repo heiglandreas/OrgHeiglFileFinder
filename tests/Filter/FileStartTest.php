@@ -25,62 +25,59 @@
  * @copyright ©2014-2014 Andreas Heigl
  * @license   http://www.opesource.org/licenses/mit-license.php MIT-License
  * @version   0.0
- * @since     07.11.14
+ * @since     05.11.14
  * @link      https://github.com/heiglandreas/
  */
 
-namespace Org_HeiglTest\FileFinder\Filter;
+namespace Org_Heigl\FileFinderTest\Filter;
 
 
-use Org_Heigl\FileFinder\Filter\OrList;
+use Org_Heigl\FileFinder\Filter\FileStart;
 use Mockery as M;
 
-class OrListTest extends \PHPUnit_Framework_TestCase
+class FileStartTest extends \PHPUnit_Framework_TestCase
 {
-    public function testAddingFilters()
-    {
-        $filter = new OrList();
-        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
-
-        $this->assertSame($filter, $filter->addFilter($mocked));
-        $this->assertAttributeContainsOnly($mocked, 'filter', $filter);
-    }
-
-    public function testSettingFilterInConstructor()
-    {
-        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
-        $filter = new OrList(array($mocked));
-
-        $this->assertAttributeContainsOnly($mocked, 'filter', $filter);
-    }
-
     /**
-     * @dataProvider filteringProvider
+     * @dataProvider initializingProvider
      */
-    public function testFiltering($given, $expected)
+    public function testInitializing($content, $length, $expectedLength)
     {
-
-        $file   = M::mock('\SPLFileInfo');
-
-        $filter = new OrList();
-        foreach ($given as $give) {
-            $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
-            $mocked->shouldReceive('filter')->andReturn($give);
-            $filter->addFilter($mocked);
-        }
-
-        $this->assertSame($expected, $filter->filter($file));
+        $filter = new FileStart($content, $length);
+        $this->assertAttributeEquals($content, 'contains', $filter);
+        $this->assertAttributeEquals($expectedLength, 'length', $filter);
     }
 
-    public function filteringProvider()
+    public function initializingProvider()
     {
         return array(
-            array(array(true, false, true), true),
-            array(array(false, false, false), false),
-            array(array(true,true,true), true),
+            array('foo', 0, 3),
+            //array('blöd', 0, 4),
+            array('test', 5, 5),
         );
     }
 
+    /**
+     * @dataProvider filterOneProvider
+     */
+    public function testFilterOne($contains, $length, $result)
+    {
+        $filter = new FileStart($contains, $length);
+        $file = M::mock('\SPLFileInfo');
+        $path = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '_assets' . DIRECTORY_SEPARATOR . 'testFind' . DIRECTORY_SEPARATOR . 'one.txt';
+        $file->shouldReceive('getPathname')->andReturn($path);
 
+        $this->assertSame($result, $filter->filter($file));
+    }
 
+    public function filterOneProvider()
+    {
+        return array(
+            array('foo', 0, false),
+            array('Foo', 0,  true),
+            array('Foo', 3, true),
+            array('Foo', 4, true),
+            array('ooB', 4, false),
+            array('bar', 3, false),
+        );
+    }
 }

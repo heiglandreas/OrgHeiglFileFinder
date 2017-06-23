@@ -1,7 +1,7 @@
 <?php
 /**
  * Copyright (c)2014-2014 heiglandreas
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -11,7 +11,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,67 +20,73 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @category
+ * @category 
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright ©2014-2014 Andreas Heigl
  * @license   http://www.opesource.org/licenses/mit-license.php MIT-License
  * @version   0.0
- * @since     05.11.14
+ * @since     07.11.14
  * @link      https://github.com/heiglandreas/
  */
 
-namespace Org_Heigl\FileFinder;
+namespace Org_Heigl\FileFinderTest\Filter;
 
 
-class FileList implements FileListInterface, \Countable
+use Org_Heigl\FileFinder\Filter\Not;
+use Mockery as M;
+
+class NotTest extends \PHPUnit_Framework_TestCase
 {
-    use IteratorTrait;
-
-    protected $filelist = array();
-
-    /**
-     * Add an SPL-File-Info to the filelist
-     *
-     * @param \SplFileInfo $file
-     *
-     * @return void
-     */
-    public function add(\SplFileInfo $file)
+    public function testSettingFilter()
     {
-        $this->filelist[] = $file;
+        $filter = new Not();
+        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
+
+        $this->assertSame($filter, $filter->setFilter($mocked));
+        $this->assertAttributeEquals($mocked, 'filter', $filter);
+
+    }
+
+    public function testSettingFilterInConstructor()
+    {
+        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
+        $filter = new Not($mocked);
+
+        $this->assertAttributeEquals($mocked, 'filter', $filter);
     }
 
     /**
-     * Clear all entries from the filelist
-     *
-     * @return self
+     * @dataProvider filterInvertsProvider
      */
-    public function clear()
+    public function testFilterInverts($given, $expected)
     {
-        $this->filelist = array();
+        $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
+        $mocked->shouldReceive('filter')->andReturn($given);
+
+        $file   = M::mock('\SPLFileInfo');
+
+        $filter = new Not($mocked);
+
+        $this->assertSame($expected, $filter->filter($file));
     }
 
     /**
-     * Count elements of an object
-     *
-     * @link http://php.net/manual/en/countable.count.php
-     * @return int The custom count as an integer.
-     *       </p>
-     *       <p>
-     *       The return value is cast to an integer.
+     * @expectedException \LogicException
      */
-    public function count()
+    public function testFilterThrowsException()
     {
-        return count($this->filelist);
+        $filter = new Not();
+
+        $file   = M::mock('\SPLFileInfo');
+
+        $filter->filter($file);
     }
 
-    /**
-     * Get the array the iterator shall iterate over.
-     *
-     * @return mixed
-     */
-    protected function & getIteratorArray()
+    public function filterInvertsProvider()
     {
-        return $this->filelist;
+        return array(
+            array(true, false),
+            array(false, true),
+        );
     }
 }
