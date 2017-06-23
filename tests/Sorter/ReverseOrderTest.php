@@ -29,39 +29,31 @@
 
 namespace Org_Heigl\FileFinderTest\Sorter;
 
-use Org_Heigl\FileFinder\Sorter\MTime;
-use SplFileInfo;
-use Mockery as M;
+use Org_Heigl\FileFinder\Sorter\ReverseOrder;
+use Org_Heigl\FileFinder\SorterInterface;
 
-class MTimeTest extends \PHPUnit_Framework_TestCase
+class ReverseOrderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider mTimeSortingProvider
+     * @dataProvider reverserProvider
      */
-    public function testThatMTimeSortingWorksAsExpected(
-        SplFileInfo $first,
-        SplFileInfo $second,
-        $expected
-    ) {
-        $sorter = new MTime();
-        $this->assertEquals($expected, $sorter($first, $second));
+    public function testThatReversingOrderWorks($input, $output)
+    {
+        $sorter = \Mockery::mock(SorterInterface::class);
+        $sorter->shouldReceive('__invoke')->andReturn($input);
+        $reverse = new ReverseOrder($sorter);
+
+        $file = \Mockery::mock(\SplFileInfo::class);
+
+        $this->assertEquals($output, $reverse($file, $file));
     }
 
-    public function mTimeSortingProvider()
+    public function reverserProvider()
     {
-        $date = new \DateTimeImmutable();
-        $date = new \DateTimeImmutable();
-
-        $a = M::mock(SplFileInfo::class);
-        $a->shouldReceive('getMTime')->andReturn($date->getTimestamp());
-
-        $b = M::mock(SplFileInfo::class);
-        $b->shouldReceive('getMTime')->andReturn($date->sub(new \DateInterval('P2D'))->getTimestamp());
-
         return [
-            [$a, $b, -1],
-            [$b, $a, 1],
-            [$b, $b, 0],
+            [1, -1],
+            [-1, 1],
+            [0, 0],
         ];
     }
 }

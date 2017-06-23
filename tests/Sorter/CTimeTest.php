@@ -29,21 +29,21 @@
 
 namespace Org_Heigl\FileFinderTest\Sorter;
 
-use Org_Heigl\FileFinder\Sorter\MTime;
+use Org_Heigl\FileFinder\Sorter\CTime;
 use SplFileInfo;
 use Mockery as M;
 
-class MTimeTest extends \PHPUnit_Framework_TestCase
+class CTimeTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider mTimeSortingProvider
      */
-    public function testThatMTimeSortingWorksAsExpected(
+    public function testThatCTimeSortingWorksAsExpected(
         SplFileInfo $first,
         SplFileInfo $second,
         $expected
     ) {
-        $sorter = new MTime();
+        $sorter = new CTime();
         $this->assertEquals($expected, $sorter($first, $second));
     }
 
@@ -53,10 +53,10 @@ class MTimeTest extends \PHPUnit_Framework_TestCase
         $date = new \DateTimeImmutable();
 
         $a = M::mock(SplFileInfo::class);
-        $a->shouldReceive('getMTime')->andReturn($date->getTimestamp());
+        $a->shouldReceive('getCTime')->andReturn($date->getTimestamp());
 
         $b = M::mock(SplFileInfo::class);
-        $b->shouldReceive('getMTime')->andReturn($date->sub(new \DateInterval('P2D'))->getTimestamp());
+        $b->shouldReceive('getCTime')->andReturn($date->sub(new \DateInterval('P2D'))->getTimestamp());
 
         return [
             [$a, $b, -1],
