@@ -43,6 +43,7 @@ class ReverseOrder implements SorterInterface
 
     public function __invoke(SplFileInfo $first, SplFileInfo $second)
     {
-        return ($this->sorter)($first, $second) * -1;
+        $method = $this->sorter;
+        return $method($first, $second) * -1;
     }
 }
