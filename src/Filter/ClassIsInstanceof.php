@@ -57,10 +57,13 @@ class ClassIsInstanceof implements FilterInterface
         }
 
         $ReflectionClass = new \ReflectionClass($class);
-        $class = $ReflectionClass->newInstanceWithoutConstructor();
 
         foreach ($this->instances as $instance) {
-            if ($class instanceof $instance) {
+            if ($ReflectionClass->isSubclassOf($instance)) {
+                return true;
+            }
+
+            if ($class === $instance) {
                 return true;
             }
         }
