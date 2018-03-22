@@ -57,6 +57,11 @@ class ClassIsInstanceof implements FilterInterface
         }
 
         $ReflectionClass = new \ReflectionClass($class);
+
+        if ($ReflectionClass->isAbstract()) {
+            return false;
+        }
+
         $class = $ReflectionClass->newInstanceWithoutConstructor();
 
         foreach ($this->instances as $instance) {
