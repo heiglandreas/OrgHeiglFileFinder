@@ -33,8 +33,9 @@ namespace Org_Heigl\FileFinderTest\Service;
 
 
 use Org_Heigl\FileFinder\Service\Tokenlist;
+use PHPUnit\Framework\TestCase;
 
-class TokenlistTest extends \PHPUnit_Framework_TestCase
+class TokenlistTest extends TestCase
 {
 
     public function testInstantiation()

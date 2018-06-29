@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest;
 
 use Org_Heigl\FileFinder\FileList;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class FileListTest extends \PHPUnit_Framework_TestCase
+class FileListTest extends TestCase
 {
 
     public function testADdingFile()

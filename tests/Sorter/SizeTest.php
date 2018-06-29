@@ -30,10 +30,11 @@
 namespace Org_Heigl\FileFinderTest\Sorter;
 
 use Org_Heigl\FileFinder\Sorter\Size;
+use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 use Mockery as M;
 
-class SizeTest extends \PHPUnit_Framework_TestCase
+class SizeTest extends TestCase
 {
     /**
      * @dataProvider mTimeSortingProvider

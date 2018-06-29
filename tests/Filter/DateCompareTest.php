@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Org_Heigl\FileFinder\Filter\DateCompare;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class DateCompareTest extends \PHPUnit_Framework_TestCase
+class DateCompareTest extends TestCase
 {
     public function setup()
     {

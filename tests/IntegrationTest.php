@@ -35,8 +35,9 @@ namespace Org_Heigl\FileFinderTest;
 use Org_Heigl\FileFinder\FileFinder;
 use Mockery as M;
 use Org_Heigl\FileFinder\FileList;
+use PHPUnit\Framework\TestCase;
 
-class IntegrationTest extends \PHPUnit_Framework_TestCase
+class IntegrationTest extends TestCase
 {
     public function testFindingPhpFiles()
     {

@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Org_Heigl\FileFinder\Filter\FileStart;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class FileStartTest extends \PHPUnit_Framework_TestCase
+class FileStartTest extends TestCase
 {
     /**
      * @dataProvider initializingProvider

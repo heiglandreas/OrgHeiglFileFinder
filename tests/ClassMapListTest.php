@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest;
 
 use Org_Heigl\FileFinder\ClassMapList;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class ClassMapListTest extends \PHPUnit_Framework_TestCase
+class ClassMapListTest extends TestCase
 {
     public function testADdingFile()
     {
