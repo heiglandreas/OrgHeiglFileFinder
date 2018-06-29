@@ -33,8 +33,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Mockery as M;
 use Org_Heigl\FileFinder\Filter\FileSize;
+use PHPUnit\Framework\TestCase;
 
-class FileSizeTest extends \PHPUnit_Framework_TestCase
+class FileSizeTest extends TestCase
 {
 
     /**

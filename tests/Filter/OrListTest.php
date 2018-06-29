@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Org_Heigl\FileFinder\Filter\OrList;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class OrListTest extends \PHPUnit_Framework_TestCase
+class OrListTest extends TestCase
 {
     public function testAddingFilters()
     {
@@ -43,7 +44,7 @@ class OrListTest extends \PHPUnit_Framework_TestCase
         $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
 
         $this->assertSame($filter, $filter->addFilter($mocked));
-        $this->assertAttributeContainsOnly($mocked, 'filter', $filter);
+        $this->assertAttributeSame([$mocked], 'filter', $filter);
     }
 
     public function testSettingFilterInConstructor()
@@ -51,7 +52,7 @@ class OrListTest extends \PHPUnit_Framework_TestCase
         $mocked = M::mock('\Org_Heigl\FileFinder\FilterInterface');
         $filter = new OrList(array($mocked));
 
-        $this->assertAttributeContainsOnly($mocked, 'filter', $filter);
+        $this->assertAttributeSame([$mocked], 'filter', $filter);
     }
 
     /**
@@ -74,11 +75,11 @@ class OrListTest extends \PHPUnit_Framework_TestCase
 
     public function filteringProvider()
     {
-        return array(
-            array(array(true, false, true), true),
-            array(array(false, false, false), false),
-            array(array(true,true,true), true),
-        );
+        return [
+            [[true, false, true], true],
+            [[false, false, false], false],
+            [[true, true, true], true],
+        ];
     }
 
 

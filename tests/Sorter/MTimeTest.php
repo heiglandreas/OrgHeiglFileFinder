@@ -30,10 +30,11 @@
 namespace Org_Heigl\FileFinderTest\Sorter;
 
 use Org_Heigl\FileFinder\Sorter\MTime;
+use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 use Mockery as M;
 
-class MTimeTest extends \PHPUnit_Framework_TestCase
+class MTimeTest extends TestCase
 {
     /**
      * @dataProvider mTimeSortingProvider

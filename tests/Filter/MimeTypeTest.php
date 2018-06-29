@@ -33,8 +33,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Org_Heigl\FileFinder\Filter\MimeType;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class MimeTypeTest extends \PHPUnit_Framework_TestCase
+class MimeTypeTest extends TestCase
 {
 
     /**

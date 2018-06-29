@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Org_Heigl\FileFinder\Filter\ClassIsInstanceof;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class ClassIsInstanceofTest extends \PHPUnit_Framework_TestCase
+class ClassIsInstanceofTest extends TestCase
 {
     public function testSettingInstances()
     {

@@ -33,8 +33,9 @@ namespace Org_Heigl\FileFinderTest\Service;
 
 use Org_Heigl\FileFinder\Service\FinfoWrapper;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class FinfoWrapperTest extends \PHPUnit_Framework_TestCase
+class FinfoWrapperTest extends TestCase
 {
 
     public function testInstantiationWithFInfo()

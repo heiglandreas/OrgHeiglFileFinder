@@ -33,8 +33,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 
 use Org_Heigl\FileFinder\Filter\HoldsSinglePHPClass;
+use PHPUnit\Framework\TestCase;
 
-class HoldsSinglePHPClassTest extends \PHPUnit_Framework_TestCase
+class HoldsSinglePHPClassTest extends TestCase
 {
 
     /**

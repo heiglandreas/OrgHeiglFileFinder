@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Org_Heigl\FileFinder\Filter\FileExtension;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class FileExtensionTest extends \PHPUnit_Framework_TestCase
+class FileExtensionTest extends TestCase
 {
     public function testSettingANdGettingFileExtensions()
     {

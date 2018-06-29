@@ -30,9 +30,10 @@
 namespace Org_Heigl\FileFinderTest\Sorter;
 
 use Org_Heigl\FileFinder\Sorter\Name;
+use PHPUnit\Framework\TestCase;
 use SplFileInfo;
 
-class NameTest extends \PHPUnit_Framework_TestCase
+class NameTest extends TestCase
 {
     /**
      * @dataProvider mTimeSortingProvider

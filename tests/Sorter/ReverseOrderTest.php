@@ -31,8 +31,9 @@ namespace Org_Heigl\FileFinderTest\Sorter;
 
 use Org_Heigl\FileFinder\Sorter\ReverseOrder;
 use Org_Heigl\FileFinder\SorterInterface;
+use PHPUnit\Framework\TestCase;
 
-class ReverseOrderTest extends \PHPUnit_Framework_TestCase
+class ReverseOrderTest extends TestCase
 {
     /**
      * @dataProvider reverserProvider

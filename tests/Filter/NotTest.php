@@ -34,8 +34,9 @@ namespace Org_Heigl\FileFinderTest\Filter;
 
 use Org_Heigl\FileFinder\Filter\Not;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
-class NotTest extends \PHPUnit_Framework_TestCase
+class NotTest extends TestCase
 {
     public function testSettingFilter()
     {
